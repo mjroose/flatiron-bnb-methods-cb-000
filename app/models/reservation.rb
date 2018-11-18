@@ -6,6 +6,7 @@ class Reservation < ActiveRecord::Base
 
   validates :checkin, :presence => true
   validates :checkout, :presence => true
+  validate :checkin_time_before_checkout
 
   def duration
     (self.checkout - self.checkin).to_i
@@ -13,5 +14,9 @@ class Reservation < ActiveRecord::Base
 
   def total_price
     (self.duration * self.listing.price).to_f
+  end
+
+  def checkin_time_before_checkout
+    self.checkin < self.checkout
   end
 end
