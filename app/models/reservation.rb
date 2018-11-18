@@ -17,6 +17,8 @@ class Reservation < ActiveRecord::Base
   end
 
   def checkin_time_before_checkout
-    self.checkin < self.checkout
+    if self.checkin < self.checkout
+      errors[:checkin] = "must be at least one day before checkout"
+    end
   end
 end
