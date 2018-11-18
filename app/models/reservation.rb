@@ -4,4 +4,7 @@ class Reservation < ActiveRecord::Base
   has_one :review
   has_one :host, :through => :listing
 
+  validates :checkin, :presence => true
+  validates :checkout, :presence => true
+
 end
