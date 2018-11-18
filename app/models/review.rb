@@ -8,7 +8,7 @@ class Review < ActiveRecord::Base
   validate :trip_completed
 
   def trip_completed
-    if self.reservation == nil || self.reservation.status != "accepted" || self.reservation.checkout < Date.today
+    if self.reservation == nil || self.reservation.status != "accepted" || self.reservation.checkout > Date.today
       binding.pry
       errors[:reservation] = "must have actually stayed at listing"
     end
