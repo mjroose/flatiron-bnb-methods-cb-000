@@ -10,4 +10,8 @@ class Reservation < ActiveRecord::Base
   def duration
     (self.checkout - self.checkin).to_i
   end
+
+  def total_price
+    self.duration.to_f * self.listing.price
+  end
 end
