@@ -9,7 +9,6 @@ class Review < ActiveRecord::Base
 
   def trip_completed
     if self.reservation == nil || self.reservation.status != "accepted" || self.reservation.checkout > Date.today
-
       errors[:reservation] = "must have actually stayed at listing"
     end
   end
