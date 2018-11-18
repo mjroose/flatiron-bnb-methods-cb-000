@@ -7,4 +7,7 @@ class Reservation < ActiveRecord::Base
   validates :checkin, :presence => true
   validates :checkout, :presence => true
 
+  def duration
+    (self.checkout - self.checkin).to_i
+  end
 end
