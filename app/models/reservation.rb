@@ -25,7 +25,7 @@ class Reservation < ActiveRecord::Base
 
   def available
     return unless errors.blank?
-    if listing.reservations.empty? || already_booked?
+    if already_booked?
       errors[:reservation] = "cannot already be booked"
     end
   end
