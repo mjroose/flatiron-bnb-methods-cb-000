@@ -7,7 +7,7 @@ class Reservation < ActiveRecord::Base
   validates :checkin, :presence => true
   validates :checkout, :presence => true
   validate :checkin_time_before_checkout
-  validate :available
+  validate :listing_available
 
   def duration
     (self.checkout - self.checkin).to_i
@@ -23,7 +23,7 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def available
+  def listing_available
     return unless errors.blank?
     if already_booked?
       errors[:reservation] = "cannot already be booked"
