@@ -8,6 +8,7 @@ class Reservation < ActiveRecord::Base
   validates :checkout, :presence => true
   validate :checkin_time_before_checkout
   validate :listing_available
+  validate :not_own_listing
 
   def duration
     (self.checkout - self.checkin).to_i
@@ -34,5 +35,12 @@ class Reservation < ActiveRecord::Base
     !!(self.listing.reservations.detect do |reservation|
       reservation.checkin < self.checkout && reservation.checkout > self.checkin
     end)
+  end
+
+  def not_own_listing
+    return unless errors.blank?
+    if guest == listing.host
+      errors[:guest] = "cannot be same as host"
+    end
   end
 end
