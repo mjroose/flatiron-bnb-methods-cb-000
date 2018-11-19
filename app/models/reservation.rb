@@ -24,6 +24,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def available
+    binding.pry
     return unless errors.blank?
     if !already_booked?
       errors[:reservation] = "cannot already be booked"
