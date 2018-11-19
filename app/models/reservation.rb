@@ -24,12 +24,10 @@ class Reservation < ActiveRecord::Base
   end
 
   def available
-    if self.checkin && self.checkout && self.listing
-      if self.listing.reservations == [] || !already_booked?
-        errors[:reservation] = "cannot already be booked"
-      end
+    return unless errors.blank?
+    if !already_booked?
+      errors[:reservation] = "cannot already be booked"
     end
-    binding.pry
   end
 
   def already_booked?
