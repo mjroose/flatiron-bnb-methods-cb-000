@@ -7,6 +7,7 @@ class Reservation < ActiveRecord::Base
   validates :checkin, :presence => true
   validates :checkout, :presence => true
   validate :checkin_time_before_checkout
+  validate :available
 
   def duration
     (self.checkout - self.checkin).to_i
@@ -19,6 +20,12 @@ class Reservation < ActiveRecord::Base
   def checkin_time_before_checkout
     if self.checkin != nil && self.checkout != nil && self.checkin >= self.checkout
       errors[:checkin] = "must be at least one day before checkout"
+    end
+  end
+
+  def available
+    self.reservations.detect do |reservation|
+      reservation.checkin < checkout && reservation.checkout > checkin
     end
   end
 end
