@@ -24,8 +24,8 @@ class Reservation < ActiveRecord::Base
   end
 
   def available
-    !self.reservations.detect do |reservation|
+    !(self.reservations.detect do |reservation|
       reservation.checkin < checkout && reservation.checkout > checkin
-    end
+    end)
   end
 end
